@@ -1,0 +1,55 @@
+options:
+	Level: "[L-1]" and "[L-2]" and "[L-3]" and "[L-4]" and "[L-5]"
+
+command /sm <text> <text>:
+	permission: mob.spawn
+	trigger:
+		if arg-1 is "Zombie":
+			summon zombie at player
+			set name of last spawned entity to "&5%arg-2% &7%arg-1%"
+			set max health of last spawned entity to 4 if arg-2 is "[L-1]"
+			set max health of last spawned entity to 8 if arg-2 is "[L-2]"
+			set max health of last spawned entity to 12 if arg-2 is "[L-3]"
+			set max health of last spawned entity to 16 if arg-2 is "[L-4]"
+			set max health of last spawned entity to 20 if arg-2 is "[L-5]"
+			heal last spawned entity
+		if arg-1 is "Husk":
+			summon husk at player
+			set name of last spawned entity to "&5%arg-2% &7%arg-1%"
+			set max health of last spawned entity to 5 if arg-2 is "[L-1]"
+			set max health of last spawned entity to 10 if arg-2 is "[L-2]"
+			set max health of last spawned entity to 15 if arg-2 is "[L-3]"
+			set max health of last spawned entity to 20 if arg-2 is "[L-4]"
+			set max health of last spawned entity to 25 if arg-2 is "[L-5]"
+			heal last spawned entity
+		if arg-1 is "Wither-skeleton":
+			summon wither skeleton at player
+			set name of last spawned entity to "&5%arg-2% &7%arg-1%"
+			set max health of last spawned entity to 5 if arg-2 is "[L-1]"
+			set max health of last spawned entity to 10 if arg-2 is "[L-2]"
+			set max health of last spawned entity to 15 if arg-2 is "[L-3]"
+			set max health of last spawned entity to 20 if arg-2 is "[L-4]"
+			set max health of last spawned entity to 25 if arg-2 is "[L-5]"
+			heal last spawned entity
+
+		
+on death:
+	kill entity
+			
+			
+on tab complete of "/sm":
+	set tab completions for position 1 to "Zombie" and "Husk" and "Wither-skeleton"
+	set tab completions for position 2 to {@Level}
+	
+on damage:
+	attacker is not player:
+		if attacker's name contains "[L-1]":
+			increase damage by 50%
+		else if attacker's name contains "[L-2]":
+			increase damage by 100%
+		else if attacker's name contains "[L-3]":
+			increase damage by 150%
+		else if attacker's name contains "[L-4]":
+			increase damage by 200%
+		else if attacker's name contains "[L-5]":
+			increase damage by 250%

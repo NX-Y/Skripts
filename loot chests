@@ -3,7 +3,8 @@ options:
 	1: dungeon
 	2: loot
 	3: hidden
-	
+
+# commands
 command /cl:
 	permission: loot.chest.admin
 	trigger:
@@ -18,7 +19,6 @@ command /gc <text>:
 		if arg 1 is "{@2}":
 			give player chest named "{@2}"
 			
-# command
 on tab complete of "/gc":
 	set tab completions for position 1 to "{@1}" and "{@2}"
 		

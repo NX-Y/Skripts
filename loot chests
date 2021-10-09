@@ -1,0 +1,80 @@
+# Chest Types
+options:
+	1: dungeon
+	2: loot
+	3: hidden
+	
+command /cl:
+	permission: loot.chest.admin
+	trigger:
+		send "&c⬛ - &f{@1}", "&2⬛ - &f{@2}" and "&e⬛ - &f{@3}"
+		
+command /gc <text>:
+	permission: loot.chest.admin
+	trigger:
+		if arg 1 is "{@1}":
+			give player chest named "{@1}"
+			
+		if arg 1 is "{@2}":
+			give player chest named "{@2}"
+			
+# command
+on tab complete of "/gc":
+	set tab completions for position 1 to "{@1}" and "{@2}"
+		
+# sets up detection system
+on place:
+	if player has permission "loot.chest.admin":
+		if name of player's held item is "{@1}":
+			set block 2 below to red wool
+			
+		if name of player's held item is "{@2}":
+			set block 2 below to green wool
+		
+# removes the chest & detection system
+on break:
+	if player has permission "loot.chest.admin":
+		if block 2 under block is red wool:
+			set block 2 below block to block below block
+			
+		if block 2 under block is green wool:
+			set block 2 below block to block below block
+			
+		if block 2 under block is yellow wool:
+			set block 2 below block to block below block
+		
+		
+# Gives the items
+on right click on chest:
+	if block 2 below block is red wool:
+		set block to air
+		drop 10 gold nuggets
+		chance of 50%:
+			drop stone sword
+			
+	if block 2 below block is green wool:
+		set block to air
+		chance of 75%:
+			drop 5 gold nuggets
+			stop
+		chance of 20%:
+			drop 15 gold nuggets
+			stop
+		chance of 5%:
+			drop 20 gold nuggets
+			stop
+			
+	if block 2 below block is yellow wool:
+		set block to air
+		drop 5 gold nuggets
+		chance of 75%:
+			drop 1 webs
+			stop
+		chance of 20%:
+			drop 3 webs
+			stop
+		chance of 5%:
+			drop 4 webs
+			stop
+	
+			

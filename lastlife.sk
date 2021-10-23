@@ -47,6 +47,7 @@ command /givelife <player> <number>:
 				console command "/team join Yellow %arg-1%"
 			else if {lifes::%arg-1's uuid%} = 1:
 				console command "/team join Red %arg-1%"
+				console command "/gamemode survival %arg-1%"
 				
 			if {lifes::%player's uuid%} = 3:
 				console command "/team join Green %player%"
@@ -78,3 +79,7 @@ on chat:
 		broadcast "&e<%player%>&r %message%"
 	if {lifes::%player's uuid%} = 1:
 		broadcast "&c<%player%>&r %message%"
+
+command /fixgm:
+	trigger:
+		console command "/gamemode survival %player%"

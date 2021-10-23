@@ -1,0 +1,80 @@
+on first join:
+	set {lifes::%player's uuid%} to 3
+	console command "/team join Green %player%"
+
+command /setup:
+	permission: op
+	trigger:
+		console command "/team add Green"
+		console command "/team add Yellow"
+		console command "/team add Red"
+		console command "/team add Gray"
+		
+		console command "/team modify Green color green"
+		console command "/team modify Yellow color yellow"
+		console command "/team modify Red color red"
+		console command "/team modify Gray color gray"
+		loop all players:
+			set {lifes::%loop-player's uuid%} to 3
+			console command "/team join Green %loop-player%"
+
+command /lives <player> <number>:
+	permission: op
+	trigger:
+		if arg-2 > 3:
+			send "&clifes can only be set to 3, 2 or 1"
+		else if arg-2 < 1:
+			send "&clifes can only be set to 3, 2 or 1"
+		else:
+			set {lifes::%arg-1's uuid%} to arg-2
+			send "&aset %arg-1%&a's lives to %arg-2%"
+			if {lifes::%player's uuid%} = 3:
+				console command "/team join Green %arg-1%"
+			else if {lifes::%player's uuid%} = 2:
+				console command "/team join Yellow %arg-1%"
+			else if {lifes::%player's uuid%} = 1:
+				console command "/team join Red %arg-1%"
+			
+command /givelife <player> <number>:
+	trigger:
+		if arg-2 < {lifes::%player's uuid%}:
+			add arg-2 to {lifes::%arg-1's uuid%}
+			remove arg-2 from {lifes::%player's uuid%}
+			broadcast "&a%player% gave %arg-1% %arg-2% lives"
+			if {lifes::%arg-1's uuid%} = 3:
+				console command "/team join Green %arg-1%"
+			else if {lifes::%arg-1's uuid%} = 2:
+				console command "/team join Yellow %arg-1%"
+			else if {lifes::%arg-1's uuid%} = 1:
+				console command "/team join Red %arg-1%"
+				
+			if {lifes::%player's uuid%} = 3:
+				console command "/team join Green %player%"
+			else if {lifes::%player's uuid%} = 2:
+				console command "/team join Yellow %player%"
+			else if {lifes::%player's uuid%} = 1:
+				console command "/team join Red %player%"
+				
+				
+command /mylives:
+	trigger:
+		send "%{lifes::%player's uuid%}%"
+
+on death of player:
+	remove 1 from {lifes::%player's uuid%}
+	if {lifes::%player's uuid%} = 2:
+		console command "/team join Yellow %player%"
+	else if {lifes::%player's uuid%} = 1:
+		console command "/team join Red %player%"
+	else if {lifes::%player's uuid%} = 0:
+		console command "/gamemode spectator %player%"
+		console command "/team join Gray %player%"
+		
+on chat:
+	cancel event
+	if {lifes::%player's uuid%} = 3:
+		broadcast "&a<%player%>&r %message%"
+	if {lifes::%player's uuid%} = 2:
+		broadcast "&e<%player%>&r %message%"
+	if {lifes::%player's uuid%} = 1:
+		broadcast "&c<%player%>&r %message%"

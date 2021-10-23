@@ -1,0 +1,45 @@
+#by Nxy#7584
+
+options:
+#Teleport players to spawn whenever they join
+	TPJoin: false
+
+command /setspawn:
+	permission: spawn.admin
+	permission message: &cSorry, but you don't have permission to execute this command!
+	description: Set spawn at your location.
+	trigger:
+		message "&aYou have set spawn at your location!"
+		set {spawn} to location of player
+
+command /spawn [<player>]:
+	permission: spawn.admin
+	permission message: &cSorry, but you don't have permission to execute this command!
+	description: Teleport you to spawn.
+	trigger:
+		if argument 1 is not set:
+			teleport player to {spawn}
+		else if {spawn} isn't set:
+			message "&4Error:&c spawn is not set!"
+			stop
+		else if argument 1 is set:
+			if sender has permission "spawn.admin":
+				if argument is online:
+					teleport argument to {spawn}
+					message "&6You have been teleported to spawn" to argument 1
+
+command /delspawn:
+	permission: spawn.admin
+	permission message: &cSorry, but you don't have permission to execute this command!
+	description: Unset spawn location.
+	trigger:
+		delete {spawn}
+		message "&6You have successfully unset &cspawn6!"
+
+on first join:
+		teleport player to {spawn}
+
+on join:
+	if {spawn} is set:
+		if {@TPJoin} is true:
+			teleport player to {spawn}

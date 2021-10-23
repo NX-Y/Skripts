@@ -1,0 +1,19 @@
+#by Nxy#7584
+
+command /spawnpig:
+	permission: spawn.pig
+	trigger:
+		summon pig at player	
+		set name of last spawned entity to "World Border"
+		set {border} to last spawned entity
+		
+on death:
+	if victim is pig:
+		if victim's name is "World Border":
+			cancel event
+
+every 0.1 seconds in "world":
+	set {_x} to x-position of {border}
+	set {_z} to z-position of {border}
+	console command "/worldborder center %{_x}% %{_z}%"
+	apply glowing without particles to {border} for 9 days

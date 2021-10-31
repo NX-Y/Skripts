@@ -1,0 +1,39 @@
+command /add <text>:
+	trigger:
+		if {Servers::*} does not contain arg-1:
+			add arg-1 to {Servers::*}
+			send "&aAdded"
+		else:
+			send "&cAlready added"
+		
+
+command /list:
+	trigger:
+		send "&3---------------------"
+		send {Servers::*}
+		send "&3---------------------"
+		
+command /Search <text>:
+	trigger:
+		loop {Servers::*}:
+			if {Servers::%loop-index%} contains arg-1:
+				send {Servers::%loop-index%}
+				stop
+			else if {Servers::*} does not contain arg-1:
+				send "&cList doesnt contain &e%arg-1%"
+				stop
+
+command /clearS <text>:
+	trigger:
+		remove arg-1 from {Servers::*}
+		
+on join:
+	send "&e/add <server name>"
+	send "&e/search <letter / server name>"
+	send "&e/list"
+	
+on join:
+	set join message to "&8[&2+&8] &7%player%"
+
+on quit:
+	set leave message to "&8[&c-&8] &7%player%"

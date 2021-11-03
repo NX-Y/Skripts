@@ -1,0 +1,69 @@
+options:
+	ServerName: (CHANGE)
+
+on join:
+	if {balance::%player's uuid%} is not set:
+		set {balance::%player's uuid%} to 0
+
+command /balance:
+	aliases: /bal
+	trigger:
+		send "&e[{@ServerName}] &7Your Balance: &2$%{balance::%player's uuid%}%"
+		
+command /setbal <player> <number>:
+	permission: op
+	trigger:
+		set {balance::%arg-1's uuid%} to arg-2
+		send "&e[{@ServerName}] &7Set &2%arg-1%'s &7Balance to &2$%arg-2%"
+		send "&e[{@ServerName}] &7Your Balance has been set to &2$%arg-2%" to arg-1
+		
+command /sell:
+	trigger:
+		if player has white dye:
+			set {_} to amount of white dye in player's inventory
+			add {_}*2 to {balance::%player's uuid%}
+			send "&e[{@ServerName}] &7You've sold &e%{_}% &7white dye for &2$%{_}*2%"
+			remove all white dye from player's inventory
+		else:
+			send "&e[{@ServerName}] &cyou dont have anything to sell"
+			
+command /pay <player> <number>:
+	trigger:
+		if {balance::%player's uuid%} >= arg-2:
+			remove arg-2 from {balance::%player's uuid%}
+			add arg-2 to {balance::%arg-1's uuid%}
+			send "&e[{@ServerName}] &7you recived &2$%arg-2%&7 from &3%player%" to arg-1
+			
+command /baltop:
+	trigger:
+		loop {balance::*}:
+			add 1 to {_size}
+			if {_low.to.high.list::%loop-value%} is not set:
+				set {_low.to.high.list::%loop-value%} to loop-index
+			else:
+				set {_n} to 0
+				loop {_size} times:
+					set {_n} to {_n}+1
+					{_low.to.high.list::%loop-value-1%.%{_n}%} is not set
+					set {_low.to.high.list::%loop-value-1%.%{_n}%} to loop-index
+					stop loop
+		wait 1 tick
+		set {_n} to size of {_low.to.high.list::*}
+		loop {_low.to.high.list::*}:
+			set {_high.to.low.list::%{_n}%} to loop-value
+			set {_n} to {_n}-1
+		wait 1 tick
+		set {_n} to size of {_low.to.high.list::*}
+		loop {_low.to.high.list::*}:
+			set {_high.to.low.list::%{_n}%} to loop-value
+			set {_n} to {_n}-1
+		send "&7-----------&8< &6Top10 &8>&7-----------"
+		loop {_high.to.low.list::*}:
+			add 1 to {_topnumber}
+			set {_player} to "%loop-value%" parsed as offlineplayer
+			send "&7%{_topnumber}% - &c%{_player}% &8» &7%{balance::%loop-value%}% balance"
+			add 1 to {_i}
+			if {_topnumber} > 10: #this is top 10 you can change it
+				stop
+		send "&7------------------------------"
+			

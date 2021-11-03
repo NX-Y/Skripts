@@ -8,7 +8,7 @@ on join:
 command /balance:
 	aliases: /bal
 	trigger:
-		send "&e[{@ServerName}] &7Your Balance: &2$%{balance::%player's uuid%}%"
+		send "&e[{@ServerName}] &7Your Balance: &2$%format({balance::%player's uuid%})%"
 		
 command /setbal <player> <number>:
 	permission: op
@@ -32,7 +32,7 @@ command /pay <player> <number>:
 		if {balance::%player's uuid%} >= arg-2:
 			remove arg-2 from {balance::%player's uuid%}
 			add arg-2 to {balance::%arg-1's uuid%}
-			send "&e[{@ServerName}] &7you recived &2$%arg-2%&7 from &3%player%" to arg-1
+			send "&e[{@ServerName}] &7you recived &2$%format(arg-2)%&7 from &3%player%" to arg-1
 			
 command /baltop:
 	trigger:
@@ -50,6 +50,31 @@ command /baltop:
 		wait 1 tick
 		set {_n} to size of {_low.to.high.list::*}
 		loop {_low.to.high.list::*}:
+			set {_high.to.low.list::%{_n}%} to loop-value
+			set {_n} to {_n}-1
+		wait 1 tick
+		set {_n} to size of {_low.to.high.list::*}
+		loop {_low.to.high.list::*}:
+			set {_high.to.low.list::%{_n}%} to loop-value
+			set {_n} to {_n}-1
+		send "&7-----------&8< &6Top10 &8>&7-----------"
+		loop {_high.to.low.list::*}:
+			add 1 to {_topnumber}
+			set {_player} to "%loop-value%" parsed as offlineplayer
+			send "&7%{_topnumber}% - &c%{_player}% &8» &2$%format({balance::%loop-value%})%"
+			add 1 to {_i}
+			if {_topnumber} > 10: #this is top 10 you can change it
+				stop
+		send "&7------------------------------"
+		
+function format(n: number) :: text:
+	set {_data} to "Nv,90|Ov,87|Sv,84|sv,81|Qv,78|qv,75|Tv,72,Dv,69|V,66|v,63|N,60|O,57|St,54|Sd,51|Qd,48|Qt,45|T,42|D,39|U,36|d,33|n,30|o,27|S,24|s,21|Q,18|q,15|t,12|B,9|M,6|k,3"
+	loop split {_data} at "|":
+		set {_s::*} to split loop-value at ","
+		{_n} >= 10 ^ {_s::2} parsed as number
+		return "%{_n} / 10 ^ {_s::2} parsed as number%%{_s::1}%"
+	return "%{_n}%"
+			
 			set {_high.to.low.list::%{_n}%} to loop-value
 			set {_n} to {_n}-1
 		wait 1 tick

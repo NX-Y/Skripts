@@ -1,0 +1,38 @@
+options:
+	token: (BotToken | Change)
+	
+	ChatID: (Chat you want the messages to send | Change)
+	
+	bot: (BotName | Change)
+
+on load:
+	make new discord bot:  
+		enable all default intent  
+		login to {@token} with name {@bot}
+	
+discord command baltop:
+	prefixes: !
+	trigger:
+		reply with "a"
+				
+command /panic:
+	trigger:
+		shutdown the bot named {@bot}
+		
+command /start:
+	trigger:
+		make new discord bot:  
+			enable all default intent  
+			login to {@token} with name {@bot}
+
+		
+on chat:
+	send "%player% » %message%" to text channel with id {@ChatID}
+	
+on message receive:
+	set {_cha} to text channel with id {@ChatID}
+	if event-channel is {_cha}:
+		event-user is a discord bot:
+			stop
+		else:
+			broadcast "&b[Discord] &r%event-user% » %event-message%"

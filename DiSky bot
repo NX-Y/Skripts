@@ -1,9 +1,9 @@
 options:
-	token: (BotToken | Change)
+	token: "(BotToken | Change)"
 	
-	ChatID: (Chat you want the messages to send | Change)
+	ChatID: "(Chat you want the messages to send | Change)"
 	
-	bot: (BotName | Change)
+	bot: "(BotName | Change)"
 
 on load:
 	make new discord bot:  

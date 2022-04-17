@@ -1,0 +1,54 @@
+command /a:
+	permission: op
+	trigger:
+		create a gui with virtual chest inventory with 3 rows named "&bSelect Nation"
+		edit gui last gui:
+			make gui 3 with cactus named "&6DESERT" with lore "&a● &7Take less damage from fire%nl%&a● &7Deal more damage in hot boimes%nl%&c● &7Deal less damage in others":
+			
+				console command "/lp user %player% parent set desert"
+				console command "/tp %player% 2213 74 887"
+				set max health of player to 10
+				close inventory of player
+				
+				
+			make gui 5 with jungle leaves named "&aJUNGLE" with lore "&a● &7Jump Higher%nl%&a● &7Decreased fall damage%nl%&c● &71 less heart":
+			
+				console command "/lp user %player% parent set jungle"
+				console command "/tp %player% 3094 83 1497"
+				set max health of player to 9
+				close inventory of player
+				
+				
+			make gui 11 with grass block named "&ePLAINS" with lore "&a● &7Mine faster when sneaking%nl%&a● &7get stronger by drinking milk%nl%&c● &7weaker during the rain":
+			
+				console command "/lp user %player% parent set plains"
+				console command "/tp %player% 331 68 1628"
+				set max health of player to 10
+				close inventory of player
+				
+				
+			make gui 15 with snow block named "&bSNOW" with lore "&a● &7Take less hunger%nl%&a● &7immune to powdered snow%nl%&c● &7take more damage from fire":
+			
+				console command "/lp user %player% parent set snow"
+				console command "/tp %player% 1857 90 3055"
+				set max health of player to 10
+				close inventory of player
+				
+				
+			make gui 21 with lily pad named "&2SWAMP" with lore "&a● &7Faster in water%nl%&a● &7can inflict poison while in swamp boime%nl%&c● &7no debuff you're already bad":
+			
+				console command "/lp user %player% parent set swamp"
+				console command "/tp %player% 3582 74 2355"
+				set max health of player to 10
+				close inventory of player
+				
+				
+			make gui 23 with netherrack named "&cWASTE" with lore "&a● &72 extra hearts%nl%&a● &7can eat rotton flesh%nl%&c● &7weak during the day":
+			
+				console command "/lp user %player% parent set waste"
+				console command "/tp %player% 504 90 2319"
+				set max health of player to 12
+				close inventory of player
+				
+				
+		open last gui to player

@@ -1,0 +1,77 @@
+#plains
+
+on sneak toggle:
+	prefix of player contains "plains":
+		player is not sneaking:
+			apply haste 1 without particles to player for 99999 days
+		player is sneaking:
+			remove haste from player
+			
+on consume of milk bucket:
+	prefix of player contains "plains":
+		wait 1 tick
+		apply absorption 1 without particles to player for 30 seconds
+		
+on player move:
+	prefix of player contains "plains":
+		if player is in rain:
+			apply weakness 1 without particles to player for 1 tick
+			
+#desert
+
+on damage of player:
+	prefix of victim contains "desert":
+		damage cause was fire:
+			apply resistance 1 without particles to victim for 10 tick
+			
+on damage:
+	prefix of attacker contains "desert":
+		biome at the attacker is desert, savanna or badlands:
+			damage victim by 1
+		else:
+			heal victim by 1
+			
+#jungle
+	
+on jump:
+	prefix of player contains "jungle":
+		apply jump boost 1 without particles to player for 9999 years
+		
+on damage of player:
+	prefix of victim contains "jungle":
+		damage cause was fall:
+			set {_dmg} to final damage
+			heal victim by ({_dmg} / 10)
+			
+#swamp
+
+on swim toggle:
+	prefix of player contains "swamp":
+		apply dolphins grace 1 without particles to player for 9999 years
+		apply water breathing 1 without particles to player for 9999 years
+	
+on damage:
+	prefix of attacker contains "swamp":
+		chance of 30%:
+			apply poison without particles to victim for 2 seconds
+	
+#snow
+
+on food bar change:
+	prefix of player contains "snow":
+		chance of 50%:
+			cancel event
+			
+on damage:
+	prefix of victim contains "snow":
+		damage cause is freeze:
+			cancel event
+		damage cause is fire:
+			damage victim by 1
+			
+#waste
+
+on consume of rotten flesh:
+	prefix of player contains "waste":
+		wait 1 tick
+		console command "/effect clear %player% minecraft:hunger"

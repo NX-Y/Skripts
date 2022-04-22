@@ -10,10 +10,16 @@ on load:
 		enable all default intent  
 		login to {@token} with name {@bot}
 	
-discord command baltop:
-	prefixes: !
-	trigger:
-		reply with "a"
+discord command online:
+    prefixes: !
+    trigger:
+        loop all players:
+            add "- `%loop-value%`" to {_l::*}
+            make embed:
+                set title of embed to "Online"
+                set description of embed to join {_l::*} with nl
+		set timestamp of embed to now
+	reply with last embed
 				
 command /panic:
 	trigger:

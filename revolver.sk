@@ -19,6 +19,20 @@ on right click with netherite hoe:
 			if {round-5::%player's uuid%::*} is set:
 				make gui {round-5::%player's uuid%::*} with snowball named ".38 round"
 				
+			if {eround-5::%player's uuid%::*} is set:
+				make gui {eround-5::%player's uuid%::*} with slimeball named ".38 empty shell":
+					set {_slot} to index of event-slot
+					add 1 slimeball to player
+					make gui {_slot} with light gray stained glass pane named "Empty round":
+						if player's inventory contains snowball:
+							set {_slot} to index of event-slot
+							remove 1 snowball from player
+							make gui {_slot} with snowball named ".38 round"
+							add index of event-slot to {round-5::%player's uuid%::*}
+							play sound "minecraft:item.armor.equip_chain" to player
+					remove index of event-slot from {eround-5::%player's uuid%::*}
+					play sound "minecraft:item.armor.equip_chain" to player
+				
 		open last gui to player
 		
 	else:
@@ -35,6 +49,7 @@ function shoot5(p: player):
 	if {round-5::%{_p}'s uuid%} is 1:
 		if {round-5::%{_p}'s uuid%::*} contains 4:
 			remove 4 from {round-5::%{_p}'s uuid%::*}
+			add 4 to {eround-5::%{_p}'s uuid%::*}
 			make {_p} shoot snowball at speed 1
 			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
 		else:
@@ -42,6 +57,7 @@ function shoot5(p: player):
 	else if {round-5::%{_p}'s uuid%} is 2:
 		if {round-5::%{_p}'s uuid%::*} contains 24:
 			remove 24 from {round-5::%{_p}'s uuid%::*}
+			add 24 to {eround-5::%{_p}'s uuid%::*}
 			make {_p} shoot snowball at speed 1
 			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
 		else:
@@ -49,6 +65,7 @@ function shoot5(p: player):
 	else if {round-5::%{_p}'s uuid%} is 3:
 		if {round-5::%{_p}'s uuid%::*} contains 41:
 			remove 41 from {round-5::%{_p}'s uuid%::*}
+			add 41 to {eround-5::%{_p}'s uuid%::*}
 			make {_p} shoot snowball at speed 1
 			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
 		else:
@@ -56,6 +73,7 @@ function shoot5(p: player):
 	else if {round-5::%{_p}'s uuid%} is 4:
 		if {round-5::%{_p}'s uuid%::*} contains 39:
 			remove 39 from {round-5::%{_p}'s uuid%::*}
+			add 39 to {eround-5::%{_p}'s uuid%::*}
 			make {_p} shoot snowball at speed 1
 			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
 		else:
@@ -63,9 +81,19 @@ function shoot5(p: player):
 	else if {round-5::%{_p}'s uuid%} is 5:
 		if {round-5::%{_p}'s uuid%::*} contains 20:
 			remove 20 from {round-5::%{_p}'s uuid%::*}
+			add 20 to {eround-5::%{_p}'s uuid%::*}
 			make {_p} shoot snowball at speed 1
 			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
 		else:
 			play sound "minecraft:block.lever.click" to {_p}
 		
-			
+command /a:
+	trigger:
+		send {round-5::%player's uuid%::*}
+		send "--------"
+		send {eround-5::%player's uuid%::*}
+		
+command /re:
+	trigger:
+		clear {round-5::%player's uuid%::*}
+		clear {eround-5::%player's uuid%::*}

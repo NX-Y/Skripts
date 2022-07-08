@@ -1,0 +1,105 @@
+options:
+	name: round-7
+
+on right click with gold hoe:
+	cancel event
+	if player is sneaking:
+		create a gui with virtual chest inventory with 6 rows named "&b7 shot - Reload"
+		edit gui last gui:
+			make gui integers from 0 to 44 with black stained glass pane named " "
+			make gui integers from 45 to 53 with dark gray stained glass pane named " "
+			
+			make gui 4, 11, 15, 29, 33, 39, 41 with light gray stained glass pane named "Empty round":
+				if player's inventory contains snowball:
+					set {_slot} to index of event-slot
+					remove 1 snowball from player
+					make gui {_slot} with snowball named ".38 round"
+					add index of event-slot to {{@name}::%player's uuid%::*}
+					play sound "minecraft:item.armor.equip_chain" to player
+					
+			if {{@name}::%player's uuid%::*} is set:
+				make gui {{@name}::%player's uuid%::*} with snowball named ".38 round"
+				
+			if {e{@name}::%player's uuid%::*} is set:
+				make gui {e{@name}::%player's uuid%::*} with slimeball named ".38 empty shell":
+					set {_slot} to index of event-slot
+					add 1 slimeball named ".38 empty shell" to player
+					make gui {_slot} with light gray stained glass pane named "Empty round":
+						if player's inventory contains snowball:
+							set {_slot} to index of event-slot
+							remove 1 snowball from player
+							make gui {_slot} with snowball named ".38 round"
+							add index of event-slot to {{@name}::%player's uuid%::*}
+							play sound "minecraft:item.armor.equip_chain" to player
+					remove index of event-slot from {e{@name}::%player's uuid%::*}
+					play sound "minecraft:item.armor.equip_chain" to player
+				
+		open last gui to player
+		
+	else:
+		if {{@name}::%player's uuid%} is not set:
+			set {{@name}::%player's uuid%} to 1
+		if {{@name}::%player's uuid%} > 6:
+			set {{@name}::%player's uuid%} to 1
+			shoot7(player)
+		else:
+			add 1 to {{@name}::%player's uuid%}
+			shoot7(player)
+
+function shoot7(p: player):
+	if {{@name}::%{_p}'s uuid%} is 1:
+		if {{@name}::%{_p}'s uuid%::*} contains 4:
+			remove 4 from {{@name}::%{_p}'s uuid%::*}
+			add 4 to {e{@name}::%{_p}'s uuid%::*}
+			make {_p} shoot snowball at speed 1
+			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
+		else:
+			play sound "minecraft:block.lever.click" to {_p}
+	else if {{@name}::%{_p}'s uuid%} is 2:
+		if {{@name}::%{_p}'s uuid%::*} contains 15:
+			remove 15 from {{@name}::%{_p}'s uuid%::*}
+			add 15 to {e{@name}::%{_p}'s uuid%::*}
+			make {_p} shoot snowball at speed 1
+			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
+		else:
+			play sound "minecraft:block.lever.click" to {_p}
+	else if {{@name}::%{_p}'s uuid%} is 3:
+		if {{@name}::%{_p}'s uuid%::*} contains 33:
+			remove 33 from {{@name}::%{_p}'s uuid%::*}
+			add 33 to {e{@name}::%{_p}'s uuid%::*}
+			make {_p} shoot snowball at speed 1
+			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
+		else:
+			play sound "minecraft:block.lever.click" to {_p}
+	else if {{@name}::%{_p}'s uuid%} is 4:
+		if {{@name}::%{_p}'s uuid%::*} contains 41:
+			remove 41 from {{@name}::%{_p}'s uuid%::*}
+			add 41 to {e{@name}::%{_p}'s uuid%::*}
+			make {_p} shoot snowball at speed 1
+			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
+		else:
+			play sound "minecraft:block.lever.click" to {_p}
+	else if {{@name}::%{_p}'s uuid%} is 5:
+		if {{@name}::%{_p}'s uuid%::*} contains 39:
+			remove 39 from {{@name}::%{_p}'s uuid%::*}
+			add 39 to {e{@name}::%{_p}'s uuid%::*}
+			make {_p} shoot snowball at speed 1
+			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
+		else:
+			play sound "minecraft:block.lever.click" to {_p}
+	else if {{@name}::%{_p}'s uuid%} is 6:
+		if {{@name}::%{_p}'s uuid%::*} contains 29:
+			remove 29 from {{@name}::%{_p}'s uuid%::*}
+			add 29 to {e{@name}::%{_p}'s uuid%::*}
+			make {_p} shoot snowball at speed 1
+			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
+		else:
+			play sound "minecraft:block.lever.click" to {_p}
+	else if {{@name}::%{_p}'s uuid%} is 7:
+		if {{@name}::%{_p}'s uuid%::*} contains 11:
+			remove 11 from {{@name}::%{_p}'s uuid%::*}
+			add 11 to {e{@name}::%{_p}'s uuid%::*}
+			make {_p} shoot snowball at speed 1
+			play sound "minecraft:block.piston.extend" at pitch 2 to {_p}
+		else:
+			play sound "minecraft:block.lever.click" to {_p}
